@@ -1,0 +1,67 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Websites list</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<mat-card>
+  <mat-card-content align="center">
+    <div class="mat-elevation-z8">
+      <mat-table [dataSource]="sites">
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="Id">
+          <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+          <mat-cell *matCellDef="let site"> {{site.id_site}}</mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Site name">
+          <mat-header-cell *matHeaderCellDef> Site name</mat-header-cell>
+          <mat-cell *matCellDef="let site"> {{site.nom_site}}</mat-cell>
+        </ng-container>
+
+        <!-- Url Column -->
+        <ng-container matColumnDef="Site url">
+          <mat-header-cell *matHeaderCellDef> Feed Url</mat-header-cell>
+          <mat-cell *matCellDef="let site"> {{site.url_feed}}</mat-cell>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="Type">
+          <mat-header-cell *matHeaderCellDef> Type of feed</mat-header-cell>
+          <mat-cell *matCellDef="let site"> {{site.type}}</mat-cell>
+        </ng-container>
+
+        <!--Edit Column-->
+        <ng-container matColumnDef="Edit">
+          <mat-header-cell *matHeaderCellDef>Edit</mat-header-cell>
+          <mat-cell *matCellDef="let site"><button mat-raised-button color="primary" [routerLink]="['/site-edit', site.id_site]">Edit</button></mat-cell>
+        </ng-container>
+
+        <!--Delete Column-->
+        <ng-container matColumnDef="Delete">
+          <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
+          <mat-cell *matCellDef="let site"><button mat-raised-button color="primary" (click)="remove(site)">Delete</button></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <mat-paginator #MatPaginator
+                     [pageSize]="3"
+                     [length]="6"
+                     [pageSizeOptions]="[3 , 6 , 8]"
+                     showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+  <button mat-fab color="primary" [routerLink]="['/site-add']">Add</button>
+</mat-card>
+
